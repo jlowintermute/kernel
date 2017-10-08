@@ -18,7 +18,7 @@ include_directories(include)
 
 add_library(kernel src/Kernel.cpp)
 target_link_libraries(kernel
-  Log
+  log
   ${link_flags}
   Threads::Threads
   )
