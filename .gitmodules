@@ -1,0 +1,3 @@
+[submodule "3pp/log"]
+	path = 3pp/log
+	url = https://github.com/jlowintermute/log.git
