@@ -176,7 +176,7 @@ KernelImpl::start() -> void
     }
     std::this_thread::yield();
   }
-  for (auto itr = sortedModules.rbegin(); itr != sortedModules.rbegin(); ++itr) {
+  for (auto itr = sortedModules.rbegin(); itr != sortedModules.rend(); ++itr) {
     (*itr)->halt();
   }
   LOG(LOG_DEBUG, "Kernel::start: finished");
