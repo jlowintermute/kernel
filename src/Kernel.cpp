@@ -154,16 +154,16 @@ struct KernelImpl {
 auto
 KernelImpl::start() -> void
 {
-  LOG(LOG_DEBUG, "Kernel::start: starting");
+  LOG(LOG_DEBUG, "KernelImpl::start: starting");
 
   std::vector<Kernel::Module*> sortedModules;
   if (!sort(&sortedModules, modulesAndDependencies)) {
     status.store(Kernel::Status::IDLE);
     return;
   }
-  LOG(LOG_DEBUG, "Kernel::start: scheduled order:");
+  LOG(LOG_DEBUG, "KernelImpl::start: scheduled order:");
   for (auto itr = sortedModules.begin(); itr != sortedModules.end(); ++itr) {
-    LOG(LOG_DEBUG, "Kernel::start:  %s", (*itr)->name().c_str());
+    LOG(LOG_DEBUG, "KernelImpl::start:  %s", (*itr)->name().c_str());
   }
 
   for (auto itr = sortedModules.begin(); itr != sortedModules.end(); ++itr) {
@@ -179,7 +179,7 @@ KernelImpl::start() -> void
   for (auto itr = sortedModules.rbegin(); itr != sortedModules.rend(); ++itr) {
     (*itr)->halt();
   }
-  LOG(LOG_DEBUG, "Kernel::start: finished");
+  LOG(LOG_DEBUG, "KernelImpl::start: finished");
 }
 
 Kernel::Module::Module(std::string const & name)
