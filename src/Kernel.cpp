@@ -43,7 +43,7 @@ createGraph(
   std::unordered_map<std::string, Kernel::Module*> moduleMap;
   std::unordered_map<Kernel::Module*, Vertex<Kernel::Module>*> vertexMap;
   moduleGraph->reserve(modulesAndDependencies.size());
-  for (auto & module_dependencies : modulesAndDependencies) {
+  for (auto const & module_dependencies : modulesAndDependencies) {
     auto const module = std::get<0>(module_dependencies);
     moduleMap[module->name()] = module;
     Vertex<Kernel::Module> vertex;
@@ -52,16 +52,16 @@ createGraph(
     vertexMap[module] = moduleGraph->data() + moduleGraph->size() - 1;
   }
 
-  for (auto & module_dependencies : modulesAndDependencies) {
+  for (auto const & module_dependencies : modulesAndDependencies) {
     auto const module = std::get<0>(module_dependencies);
     auto const names = std::get<1>(module_dependencies);
     auto const vertex = vertexMap.find(module)->second;
     for (auto & name : names) {
       auto const itr = moduleMap.find(name);
       if (itr != moduleMap.end()) {
-        auto const dependency = vertexMap.find(itr->second);
+        auto const dependency = vertexMap.find(itr->second)->second;
         LOG(LOG_DEBUG, "Kernel: adding '%s' as dependency of '%s'", name.c_str(), module->name().c_str());
-        vertex->adjList.push_back(dependency->second);
+        dependency->adjList.push_back(vertex);
       } else {
         LOG(LOG_ERROR, "Kernel: dependency '%s' not found", name.c_str());
         return false;
